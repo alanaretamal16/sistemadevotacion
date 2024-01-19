@@ -1,7 +1,8 @@
 Pasos para poder obtener el código y visualizarlo
 
-1.Descargar e Instala Git o ingresa a github:
+VERSIONES: S.O= WINDOWS,  PHP 8.2.6  y BASE DE DATOS PHPMYADIM 10.4.28-MariaDB
 
+1.Descargar e Instala Git o ingresa a github:
 Para descargar=
 Ve al sitio web oficial de Git: Git Downloads.
 Descarga la versión adecuada para Windows y sigue las instrucciones de instalación.
