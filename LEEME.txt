@@ -1,0 +1,64 @@
+Pasos para poder obtener el código y visualizarlo
+
+1.Descargar e Instala Git o ingresa a github:
+
+Para descargar=
+Ve al sitio web oficial de Git: Git Downloads.
+Descarga la versión adecuada para Windows y sigue las instrucciones de instalación.
+
+Ingresa a github=
+https://github.com/
+
+2.Descargar e Instalar Visual Studio Code:
+
+Ve al sitio web oficial de Visual Studio Code: VS Code.
+Descarga la versión adecuada para Windows y sigue las instrucciones de instalación.
+https://code.visualstudio.com/download
+ 
+3. Descargar e Instalar Xampp:
+Ve al sitio web oficial de XAMPP: XAMPP.
+
+Descarga la versión de XAMPP adecuada para Windows desde el sitio web.
+Ejecuta el instalador descargado y sigue las instrucciones del asistente de instalación.
+Durante la instalación, se te pedirá seleccionar los componentes. Asegúrate de seleccionar al menos "Apache" y "MySQL".
+
+4.Iniciar Apache y MySQL con XAMPP:
+Después de instalar XAMPP, sigue estos pasos para iniciar los servicios:
+Abre la aplicación XAMPP desde el menú de inicio o busca "XAMPP Control Panel" en tu sistema y ejecútalo.
+En la ventana de control de XAMPP, busca las secciones "Apache" y "MySQL".
+En la sección de "Apache", haz clic en el botón "Start" para iniciar el servidor Apache.
+En la sección de "MySQL", haz clic en el botón "Start" para iniciar el servidor MySQL.
+
+5.Verificar el Funcionamiento:
+Abre tu navegador web y accede a http://localhost. Si todo está configurado correctamente, deberías ver la página de inicio de XAMPP.
+
+6.Buscar el Repositorio de GitHub:
+Después de registrarse o iniciar sesión en GitHub, busca el repositorio "sistemadevotacion". Puedes hacer esto ingresando a la barra de búsqueda de GitHub
+y escribiendo "sistemadevotacion". Una vez que encuentres el repositorio en la lista de resultados, haz clic en él.
+https://github.com/alanaretamal16/sistemadevotacion
+o en su defecto busca mi usuario alanaretamal16 , selecciona opcion repositories y selecciona el proyecto sistemadevotacion
+
+7.Descargar el Código:
+En la página del repositorio, busca el botón verde que dice "Code". Haz clic en este botón para abrir un menú desplegable.
+Asegúrate de seleccionar la opción "Download ZIP". Esto descargará un archivo ZIP del código del proyecto en tu computadora.(se almacena en la carpeta Descargas)
+
+8.Descomprimir el Archivo ZIP:
+Luego de que la descarga esté completa, copia el archivo, coloca en el buscador esta ruta C:\xampp\htdocs y pegalo en ese lugar 
+Extrae el contenido del ZIP
+
+6.Visualización del código en Visual Studio Code:
+Ingresa a visual studio code, selecciona la opcion File y selecciona open folder y buscas en donde esta el proyecto que seria en esta ruta C:\xampp\htdocs
+y selecciona la carpeta sistemadevotacion y selecciona el boton seleccionar carpeta
+
+7.Acceso al código:
+Puedes ver el MVC (modelo vista controlador, esta todo explicado)
+
+8. Colocar la Base de datos 
+Dentro de la carpeta zip que descargastes hay un archivo llamado sistema_votacion.sql el cual contiene la base de datos por lo que hay que ingresar a la pagina
+que nos derivo el xampp que es http://localhost/phpmyadmin/index.php colocas tu usuario y contraseña en caso de requerirlo y una vez dentro 
+seleccionas en el menu importar, y en examinar buscas la ruta en donde lo dejastes (C:\xampp\htdocs), finalmente bajas y seleccionas importar  y te generaria la base
+de datos 
+
+9.Visualizar en la pagina el proyecto
+Luego, en tu navegador, puedes acceder al proyecto utilizando http://localhost/sistemadevotacion/views/index.html
+
