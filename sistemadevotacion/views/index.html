@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Votación</title>
+    <style>
+        /* Estilos CSS */
+        body {
+            /* Configuración de la apariencia del body */
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow-y: scroll;
+        }
+
+        h1 {
+            /* Estilos para el título */
+            text-align: center;
+            margin-bottom: 20px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        /* Estilos para el formulario */
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            max-width: 100%;
+        }
+
+        label {
+            /* Estilos para las etiquetas de formulario */
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input,
+        select {
+            /* Estilos para los campos de formulario (input y select) */
+            width: calc(100% - 12px);
+            padding: 8px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"],
+        .submit-button {
+            /* Estilos para el botón de envío */
+            background-color: #4caf50;
+            color: #fff;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        input[type="submit"]:hover,
+        .submit-button:hover {
+            /* Estilos cuando el botón es hover */
+            background-color: #45a049;
+        }
+
+        input[type="checkbox"] {
+            /* Estilos para los checkboxes */
+            margin-bottom: 5px;
+        }
+
+        .checkbox-container {
+            /* Estilos para el contenedor de checkboxes */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            /* Estilos para los checkboxes dentro del contenedor */
+            margin: 0 5px;
+        }
+
+        .error-message {
+            /* Estilos para el mensaje de error */
+            color: red;
+            margin-top: 10px;
+        }
+
+        #resultadosContainer {
+            /* Estilos para el contenedor de resultados */
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Sistema de Votación</h1>
+    <!-- Formulario de votación -->
+    <form id="votingForm" action="controller/submit_vote.php" method="post">
+        <!-- Campos del formulario -->
+        <label for="nombre">Nombre y Apellido:</label>
+        <input type="text" name="nombre" required>
+
+        <label for="alias">Alias:</label>
+        <p style="font-size: 12px; color: #888; margin-top: 5px;">
+            El alias debe contener al menos 6 caracteres y puede incluir letras mayúsculas, minúsculas y números.
+        </p>
+        <input type="text" name="alias" required pattern="^[A-Za-z0-9]{6,}$">
+
+        <label for="rut">RUT:</label>
+        <p style="font-size: 12px; color: #888; margin-top: 5px;">
+            Ingresa tu RUT en el formato xx.xxx.xxx-Y, donde "x" es un dígito y "Y" puede ser un dígito o la letra "K".
+        </p>
+        <input type="text" name="rut" required pattern="\d{2}\.\d{3}\.\d{3}-[\dKk]">
+
+        <label for="email">Email:</label>
+        <input type="email" name="email" required>
+
+        <label for="region">Región:</label>
+        <select name="region" id="region" required></select>
+
+        <label for="comuna">Comuna:</label>
+        <select name="comuna" id="comuna" required></select>
+
+        <label for="candidato">Candidato:</label>
+        <select name="candidato" id="candidato" required></select>
+
+        <label>¿Cómo se enteró de nosotros?</label>
+        <p style="font-size: 12px; color: #888; margin-top: 5px;">
+            Ingresa al menos dos opciones
+        </p>
+        <!-- Opciones de cómo se enteró -->
+        <div class="checkbox-container">
+            <input type="checkbox" name="entero[]" value="Web"> Web
+            <input type="checkbox" name="entero[]" value="TV"> TV
+            <input type="checkbox" name="entero[]" value="Redes Sociales"> Redes Sociales
+            <input type="checkbox" name="entero[]" value="Amigo"> Amigo
+        </div>
+
+        <!-- Contenedor de resultados y mensaje de error -->
+        <div id="resultadosContainer"></div>
+        <div id="errorMessage" class="error-message"></div>
+
+        <!-- Botón de votar -->
+        <input type="submit" class="votar-button" value="Votar">
+    </form>
+
+    <!-- Script JavaScript para cargar datos dinámicamente -->
+    <script src="script.js"></script>
+    <script>
+        // Variables para referenciar elementos del DOM
+        var votingForm = document.getElementById("votingForm");
+        var errorMessageContainer = document.getElementById("errorMessage");
+        var resultadosContainer = document.getElementById("resultadosContainer");
+
+        // Evento de envío del formulario
+        votingForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            // Obtener las opciones seleccionadas
+            var checkboxes = votingForm.elements['entero[]'];
+            var opcionesSeleccionadas = obtenerOpcionesSeleccionadas(checkboxes);
+
+            // Validar que se seleccionen exactamente dos opciones
+            if (opcionesSeleccionadas.length !== 2) {
+                errorMessageContainer.textContent = "Por favor, seleccione exactamente dos opciones en '¿Cómo se enteró de nosotros?'.";
+                resultadosContainer.innerHTML = "";
+                return;
+            } else {
+                errorMessageContainer.textContent = ""; // Limpiar mensaje de error si es válido
+            }
+
+            // Obtener los valores del formulario
+            var nombre = obtenerValorInput("nombre");
+            var alias = obtenerValorInput("alias");
+            var rut = obtenerValorInput("rut");
+            var email = obtenerValorInput("email");
+            var region = obtenerValorSelect("region");
+            var comuna = obtenerValorSelect("comuna");
+            var candidato = obtenerValorSelect("candidato");
+
+            // Redireccionar a success.html con parámetros de la votación
+            window.location.href = 'success.html?nombre=' + encodeURIComponent(nombre) +
+                '&alias=' + encodeURIComponent(alias) +
+                '&rut=' + encodeURIComponent(rut) +
+                '&email=' + encodeURIComponent(email) +
+                '&region=' + encodeURIComponent(region) +
+                '&comuna=' + encodeURIComponent(comuna) +
+                '&candidato=' + encodeURIComponent(candidato) +
+                '&comoSeEntero=' + opcionesSeleccionadas.join(', ');
+
+            // Mostrar información en la consola (opcional)
+            console.log("Nombre:", nombre);
+            console.log("Alias:", alias);
+            console.log("RUT:", rut);
+            console.log("Email:", email);
+            console.log("Región:", region);
+            console.log("Comuna:", comuna);
+            console.log("Candidato:", candidato);
+            console.log("Cómo se enteró:", opcionesSeleccionadas.join(", "));
+        });
+    </script>
+</body>
+
+</html>
